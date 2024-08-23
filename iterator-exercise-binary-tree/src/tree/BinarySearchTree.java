@@ -1,22 +1,8 @@
 package tree;
 
 
-public class BinarySearchTree <T extends Comparable<T>> implements Cloneable  {
+public class BinarySearchTree <T extends Comparable<T>> implements IterableCollection<T>, Cloneable  {
     private Node<T> root;
-    
-    // Iterator
-    public TreeIterator<T> getIterator(String traversalType) {
-        switch (traversalType.toLowerCase()) {
-            case "preorder":
-                return new PreOrderIterator<>(root);
-            case "inorder":
-                return new InOrderIterator<>(root);
-            case "postorder":
-                return new PostOrderIterator<>(root);
-            default:
-                throw new IllegalArgumentException("Tipo de percurso não suportado: " + traversalType);
-        }
-    }
     
     public BinarySearchTree( T value) {
     	this.root = new Node<T>(value);
@@ -240,6 +226,25 @@ public class BinarySearchTree <T extends Comparable<T>> implements Cloneable  {
 		
 	}
 	
+	//Iterator
+	@Override
+    public TreeIterator<T> createIterator(String traversalType) {
+        return getIterator(traversalType);
+    }
+
+    public TreeIterator<T> getIterator(String traversalType) {
+        switch (traversalType.toLowerCase()) {
+            case "preorder":
+                return new PreOrderIterator<>(root);
+            case "inorder":
+                return new InOrderIterator<>(root);
+            case "postorder":
+                return new PostOrderIterator<>(root);
+            default:
+                throw new IllegalArgumentException("Tipo de percurso não suportado: " + traversalType);
+        }
+    }
+    
 	//Clone
     @Override
     public BinarySearchTree<T> clone() {
