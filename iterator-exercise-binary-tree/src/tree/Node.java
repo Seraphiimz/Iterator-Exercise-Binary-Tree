@@ -19,7 +19,6 @@ public class Node<T extends Comparable<T>> {
         left = null;
     }
     
-    //Left e Right
     public Node<T> getLeft(){
     	return left;
     }
@@ -34,26 +33,23 @@ public class Node<T extends Comparable<T>> {
    
     
     public int compareTo(Node<T> otherNode) {
-        //provide implementation here
-        //See effective java for appropriate implementation conditions
     	return this.value.compareTo(otherNode.value);
     }
     
     @Override
-    protected Node<T> clone(){
-    	try {
-    		Node<T> clonedNode = (Node<T>) super.clone();
-    		if(clonedNode.left != null) {
-    			clonedNode.left = clonedNode.left.clone();
-    		}
-    		if(clonedNode.right != null) {
-    			clonedNode.right = clonedNode.right.clone();
-    		}
-    		return clonedNode;
-    	} catch (CloneNotSupportedException e) {
-    		throw new AssertionError("Erro clonar node", e);
-    	}
+    public Node<T> clone() {
+        try {
+            Node<T> clonedNode = new Node<>(this.value);
+            if (this.left != null) {
+                clonedNode.left = this.left.clone();
+            }
+            if (this.right != null) {
+                clonedNode.right = this.right.clone();
+            }
+            return clonedNode;
+        } catch (Exception e) {
+            throw new AssertionError("Erro ao clonar node", e);
+        }
     }
 }
-
 
